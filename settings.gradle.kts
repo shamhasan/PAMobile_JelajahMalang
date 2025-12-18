@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-        google()  // ← Hapus content filter, biarkan akses penuh
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
@@ -9,8 +9,8 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()  // ← Sudah benar
-        mavenCentral()  // ← Sudah benar
+        google()
+        mavenCentral()
     }
 }
 
