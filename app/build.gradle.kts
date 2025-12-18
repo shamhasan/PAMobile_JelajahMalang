@@ -63,9 +63,22 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+
     // Firestore
     implementation("com.google.firebase:firebase-firestore")
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
 
     implementation("androidx.compose.material:material-icons-extended")
 }
