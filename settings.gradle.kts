@@ -1,24 +1,18 @@
 pluginManagement {
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()  // ← Hapus content filter, biarkan akses penuh
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        mavenCentral()
+        google()  // ← Sudah benar
+        mavenCentral()  // ← Sudah benar
     }
 }
 
 rootProject.name = "PAMobile-JelahjahMalang"
 include(":app")
- 
