@@ -1,4 +1,4 @@
-package ih.pam.pamobile_jelahjahmalang.viewModel
+package ih.pam.pamobile_jelahjahmalang.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

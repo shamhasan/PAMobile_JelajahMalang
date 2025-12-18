@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ih.pam.pamobile_jelahjahmalang.ui.components.ChatBubble
 import ih.pam.pamobile_jelahjahmalang.ui.components.ChatInput
-import ih.pam.pamobile_jelahjahmalang.viewModel.ChatViewModel
+import ih.pam.pamobile_jelahjahmalang.viewmodel.ChatViewModel
 
 @Composable
 fun ChatScreen(viewModel: ChatViewModel) {

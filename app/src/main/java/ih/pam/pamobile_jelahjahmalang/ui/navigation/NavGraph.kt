@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ih.pam.pamobile_jelahjahmalang.screen.ChatListScreen
 import ih.pam.pamobile_jelahjahmalang.screen.ChatScreen
-import ih.pam.pamobile_jelahjahmalang.viewModel.ChatViewModel
+import ih.pam.pamobile_jelahjahmalang.viewmodel.ChatViewModel
 
 @Composable
 fun AppNavGraph(

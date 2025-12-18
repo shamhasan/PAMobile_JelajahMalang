@@ -8,7 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import ih.pam.pamobile_jelahjahmalang.ui.navigation.AppNavGraph
 import ih.pam.pamobile_jelahjahmalang.ui.theme.PAMobileJelahjahMalangTheme
-import ih.pam.pamobile_jelahjahmalang.viewModel.ChatViewModel
+import ih.pam.pamobile_jelahjahmalang.viewmodel.ChatViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
