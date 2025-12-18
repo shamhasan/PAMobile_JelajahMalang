@@ -58,6 +58,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -67,11 +68,15 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import ih.pam.pamobile_jelahjahmalang.R
 import ih.pam.pamobile_jelahjahmalang.R.drawable.location
 import ih.pam.pamobile_jelahjahmalang.viewmodel.MissionViewmodel
 import ih.pam.pamobile_jelahjahmalang.viewmodel.UserViewmodel
-import kotlin.contracts.contract
+import android.content.Intent
+import android.net.Uri
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,14 +85,31 @@ fun DetailMissionScreen(
     navController: NavController,
     missionId: String,
 ) {
+    val context = LocalContext.current // Context untuk Toast dan Location
     val vmMission: MissionViewmodel = viewModel()
     val vmUser: UserViewmodel = viewModel()
 
     val authStatus by vmUser.authStatus.collectAsState()
-
     val missions by vmMission.missions.collectAsState()
+
     val selectedMission = remember(missions, missionId) {
         missions.find { it.getCleanId() == missionId }
+    }
+
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    var isCheckingLocation by remember { mutableStateOf(false) }
+
+    // Launcher untuk Izin Lokasi
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val isGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        if (isGranted) {
+            Toast.makeText(context, "Izin lokasi diberikan. Tekan tombol lagi.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Izin lokasi wajib untuk verifikasi misi!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     LaunchedEffect(authStatus) {
@@ -223,7 +245,28 @@ fun DetailMissionScreen(
                         Spacer(Modifier.width(0.dp))
                         Card(
                             onClick = {
-                                print("Menuju Map!")
+                                // 1. Ambil koordinat (pastikan tidak null/0.0)
+                                val lat = selectedMission?.fields?.latitude?.value ?: 0.0
+                                val lng = selectedMission?.fields?.longitude?.value ?: 0.0
+                                val label = Uri.encode(selectedMission?.fields?.title?.value ?: "Lokasi Misi")
+
+                                // 2. Buat URI untuk Google Maps
+                                // Format: "geo:<lat>,<lng>?q=<lat>,<lng>(<label>)"
+                                // Parameter 'q' akan membuat pin (marker) di lokasi tersebut
+                                val gmmIntentUri = Uri.parse("geo:$lat,$lng?q=$lat,$lng($label)")
+
+                                // 3. Buat Intent
+                                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                                mapIntent.setPackage("com.google.android.apps.maps") // Paksa buka di App Google Maps
+
+                                // 4. Jalankan Intent
+                                try {
+                                    context.startActivity(mapIntent)
+                                } catch (e: Exception) {
+                                    // Fallback jika aplikasi Maps tidak terinstall (opsional: buka di browser)
+                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng"))
+                                    context.startActivity(browserIntent)
+                                }
                             },
                             shape = RoundedCornerShape(8.dp),
                             modifier = modifier
@@ -231,8 +274,8 @@ fun DetailMissionScreen(
                                 .height(35.dp),
                             border = BorderStroke(3.dp, Color(0xff1D8EFD)),
                             colors = CardDefaults.cardColors(Color.White)
-
                         ) {
+                            // ... (konten icon tetap sama)
                             Spacer(Modifier.height(6.dp))
                             Icon(
                                 painter = painterResource(id = R.drawable.map),
@@ -241,9 +284,31 @@ fun DetailMissionScreen(
                                     .requiredSize(25.dp)
                                     .align(alignment = Alignment.CenterHorizontally),
                                 tint = Color(0xff1D8EFD)
-
                             )
                         }
+//                        Card(
+//                            onClick = {
+//                                Log.d("Map Button", "Menuju map")
+//                            },
+//                            shape = RoundedCornerShape(8.dp),
+//                            modifier = modifier
+//                                .width(35.dp)
+//                                .height(35.dp),
+//                            border = BorderStroke(3.dp, Color(0xff1D8EFD)),
+//                            colors = CardDefaults.cardColors(Color.White)
+//
+//                        ) {
+//                            Spacer(Modifier.height(6.dp))
+//                            Icon(
+//                                painter = painterResource(id = R.drawable.map),
+//                                contentDescription = "",
+//                                modifier
+//                                    .requiredSize(25.dp)
+//                                    .align(alignment = Alignment.CenterHorizontally),
+//                                tint = Color(0xff1D8EFD)
+//
+//                            )
+//                        }
                     }
                     Spacer(Modifier.height(8.dp))
                     Card(
@@ -386,17 +451,91 @@ fun DetailMissionScreen(
             Spacer(Modifier.height(16.dp))
             Button(
                 onClick = {
-                    vmUser.completedMission(
-                        missionId = missionId,
-                        pointsToAdd = selectedMission?.fields?.points?.value?.toInt() ?: 0,
+                    if (capturedImage == null) {
+                        Toast.makeText(context, "Harap ambil foto bukti terlebih dahulu!", Toast.LENGTH_SHORT).show()
+                        return@Button
+                    }
+
+                    val fineLocationPermission = ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_FINE_LOCATION
                     )
+                    val coarseLocationPermission = ContextCompat.checkSelfPermission(
+                        context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+
+                    if (fineLocationPermission != PackageManager.PERMISSION_GRANTED &&
+                        coarseLocationPermission != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        locationPermissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            )
+                        )
+                        return@Button
+                    }
+
+                    Toast.makeText(context, "Mengecek lokasi...", Toast.LENGTH_SHORT).show()
+
+                    fusedLocationClient.getCurrentLocation(
+                        Priority.PRIORITY_HIGH_ACCURACY,
+                        com.google.android.gms.tasks.CancellationTokenSource().token // Tambahkan Token
+                    ).addOnSuccessListener { location ->
+                        if (location != null) {
+                            val targetLat = selectedMission?.fields?.latitude?.value ?: 0.0
+                            val targetLng = selectedMission?.fields?.longitude?.value ?: 0.0
+
+                            // Panggil fungsi validasi di ViewModel
+                            val isValid = vmMission.validateMissionDistance(
+                                userLat = location.latitude,
+                                userLng = location.longitude,
+                                missionLat = targetLat,
+                                missionLng = targetLng
+                            )
+
+                            if (isValid) {
+                                vmUser.completedMission(
+                                    missionId = missionId,
+                                    pointsToAdd = selectedMission?.fields?.points?.value?.toInt() ?: 0,
+                                )
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Lokasi terlalu jauh dari target misi!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            // Lokasi null (biasanya jika GPS baru nyala dan belum lock)
+                            Toast.makeText(context, "Gagal mendeteksi lokasi. Coba nyalakan Google Maps dulu.", Toast.LENGTH_LONG).show()
+                        }
+                    }.addOnFailureListener { e ->
+                        // 4. Tangkap Error
+                        Log.e("LocationError", "Error: ${e.message}")
+                        Toast.makeText(context, "Error mengambil lokasi: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
                 },
-                modifier.fillMaxWidth(),
+                modifier = modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(Color(0xff3798F7)),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
             ) {
                 Text("Selesaikan Misi")
             }
+        //            Button(
+//                onClick = {
+//                    vmUser.completedMission(
+//                        missionId = missionId,
+//                        pointsToAdd = selectedMission?.fields?.points?.value?.toInt() ?: 0,
+//                    )
+//                },
+//                modifier.fillMaxWidth(),
+//                colors = ButtonDefaults.buttonColors(Color(0xff3798F7)),
+//                shape = RoundedCornerShape(12.dp)
+//            ) {
+//                Text("Selesaikan Misi")
+//            }
         }
     }
 }

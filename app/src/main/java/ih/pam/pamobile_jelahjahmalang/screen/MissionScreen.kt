@@ -90,253 +90,131 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
         val isLandscape = screenWidth > screenHeight
 
         Scaffold(
-
             containerColor = Color(0xffF4F8FF), topBar = {
 
-                TopAppBar(
-
+                CenterAlignedTopAppBar(
                     title = {
-
-                        CenterAlignedTopAppBar(
-
-                            title = {
-
-                                Text(
-
-                                    "Mission Explore",
-
-                                    textAlign = TextAlign.Center,
-
-                                    modifier = modifier
-
-                                        .fillMaxWidth()
-
-                                )
-
-                            },
-
-                            navigationIcon = {
-
-                                IconButton(onClick = {
-                                    navController.popBackStack()
-                                }) {
-
-                                    Icon(
-
-                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-
-                                        contentDescription = "Back Button"
-
-                                    )
-
-                                }
-
-                            },
-
-                            colors = TopAppBarDefaults.topAppBarColors(
-
-                                containerColor = Color(0xffF4F8FF)
-
-                            ),
-
-                            )
-
+                        Text(
+                            "Mission Explore",
+                            textAlign = TextAlign.Center,
+                            modifier = modifier
+                                .fillMaxWidth()
+                        )
                     },
-
-                    )
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navController.popBackStack()
+                        }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back Button"
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color(0xffF4F8FF)
+                    ),
+                )
 
             }) { innerPadding ->
-
             if (!isLandscape) {
-
                 LazyColumn(
-
                     modifier = modifier
-
                         .fillMaxSize()
-
                         .padding(innerPadding)
-
                         .padding(horizontal = 24.dp),
-
                     horizontalAlignment = Alignment.CenterHorizontally,
-
                     state = listState
-
                 ) {
-
                     item {
-
                         Card(
-
                             colors = CardDefaults.cardColors(
-
                                 containerColor = Color.White
-
                             ), modifier = modifier
-
                                 .fillMaxWidth()
-
                                 .height(125.dp)
-
                                 .shadow(
-
                                     elevation = 4.dp,
-
                                     shape = RoundedCornerShape(12.dp),
-
-                                    )
-
+                                )
                         ) {
-
                             Row(
-
                                 modifier = modifier.padding(vertical = 18.dp)
-
                             ) {
-
                                 Column(
-
                                     modifier = modifier
-
                                         .width(125.dp)
-
                                         .fillMaxSize(),
-
                                     horizontalAlignment = Alignment.CenterHorizontally,
-
                                     verticalArrangement = Arrangement.Center
-
                                 ) {
-
                                     Icon(
-
                                         tint = Color(0xffF0B100),
-
                                         painter = painterResource(id = R.drawable.oin),
-
                                         contentDescription = "Done icon",
-
                                         modifier = modifier.requiredSize(25.dp)
-
                                     )
-
                                     Text(text = "Selesai")
-
                                     Text(text = "0")
-
                                 }
-
                                 VerticalDivider()
-
                                 Column(
-
                                     modifier = modifier
-
                                         .width(125.dp)
-
                                         .fillMaxSize(),
-
                                     horizontalAlignment = Alignment.CenterHorizontally,
-
                                     verticalArrangement = Arrangement.Center
-
                                 ) {
-
                                     Icon(
-
                                         painter = painterResource(id = R.drawable.done),
-
                                         contentDescription = "Done icon",
-
                                         modifier = modifier.requiredSize(25.dp),
-
                                         tint = Color(0xff00C950)
-
                                     )
-
                                     Text(text = "Total Poin")
-
                                     Text(user?.fields?.totalPoints?.value ?: "0")
-
                                 }
-
                                 VerticalDivider()
-
                                 Column(
-
                                     modifier = modifier
-
                                         .width(125.dp)
-
                                         .fillMaxSize(),
-
                                     horizontalAlignment = Alignment.CenterHorizontally,
-
                                     verticalArrangement = Arrangement.Center
-
                                 ) {
-
                                     Icon(
-
                                         painter = painterResource(id = R.drawable.available),
-
                                         contentDescription = "Done icon",
-
                                         modifier = modifier.requiredSize(25.dp),
-
                                         tint = Color(0xff2B7FFF)
-
                                     )
-
                                     Text(text = "Aktif")
-
                                     Text(text = "0")
-
                                 }
-
                             }
-
                         }
-
                         // Bar status end
-
                         Spacer(Modifier.height(38.dp))
-
                         // List misi start
-
                         Text(
-
                             text = "Daftar Misi",
-
                             textAlign = TextAlign.Start,
-
                             modifier = modifier.fillMaxWidth()
-
                         )
-
                         Spacer(Modifier.height(16.dp))
-
                     }
-
                     // Bar status start
 
-
                     items(missions.size) { index ->
-
                         val isCompleted = completedMissionId.contains(missions[index].getCleanId())
-
                         val item = missions[index]
                         val fields = item.fields // Ambil fields sekali saja biar kodenya pendek
-
                         MissionCard(
                             modifier = Modifier.padding(),
-
                             onExploreClick = {
                                 // Fungsi getCleanId() sudah kita buat di MissionModel
                                 navController.navigate("detail_mission/${item.getCleanId()}")
                             },
-
                             // 2. PERBAIKAN TEXT: Gunakan Elvis Operator (?:)
                             // Jika datanya null, tampilkan string default (bukan tulisan "null")
                             judul = fields?.title?.value ?: "Tanpa Judul",
@@ -349,40 +227,24 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
 
                             misi = fields?.missionTask?.value ?: "Deskripsi tugas tidak tersedia",
 
-                            // 3. PERBAIKAN ANGKA: toIntOrNull()
-                            // Jika datanya error/kosong, otomatis jadi 0 (Aplikasi TIDAK CRASH)
                             poin = fields?.points?.value?.toIntOrNull() ?: 0,
 
                             isCompleted = isCompleted
                         )
-
                         Spacer(Modifier.height(8.dp))
                     }
-
                     // List Misi End
-
                 }
-
             } else {
-
                 LazyRow(
-
                     modifier = modifier
-
                         .fillMaxSize()
-
                         .padding(innerPadding)
-
                         .padding(horizontal = 24.dp),
-
                     verticalAlignment = Alignment.CenterVertically,
-
                     state = listState
-
                 ) {
-
                     item {
-
                         Card(
 
                             colors = CardDefaults.cardColors(
@@ -555,10 +417,9 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
 
                             misi = "Ambil foto didepan gapura bertuliskan kayu tangan heritage",
 
-                            poin = 100,
-                            isCompleted = false
+                            poin = 100, isCompleted = false
 
-                            )
+                        )
 
                         Spacer(Modifier.width(8.dp))
 
@@ -585,7 +446,7 @@ fun MissionCard(
     alamat2: String,
     misi: String,
     poin: Int,
-    isCompleted: Boolean
+    isCompleted: Boolean,
 ) {
     Card(
         border = BorderStroke(1.1.dp, color = Color(0xffE5E7EB)),
@@ -657,7 +518,7 @@ fun MissionCard(
                     enabled = !isCompleted,
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
-                        if (isCompleted) Color(0xFFBDBDBD) else Color(0xff3798F7) ,
+                        if (isCompleted) Color(0xFFBDBDBD) else Color(0xff3798F7),
                     ),
                     modifier = modifier.width(120.dp)
                 ) {
