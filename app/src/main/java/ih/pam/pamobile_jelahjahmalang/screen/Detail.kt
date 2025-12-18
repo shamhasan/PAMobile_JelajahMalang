@@ -1,4 +1,4 @@
-package pg.mobile.projectpampricil.ui
+package ih.pam.pamobile_jelahjahmalang.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ih.pam.pamobile_jelahjahmalang.viewmodel.PlaceViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

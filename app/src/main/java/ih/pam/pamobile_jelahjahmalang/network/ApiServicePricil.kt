@@ -1,12 +1,14 @@
-package pg.mobile.projectpampricil.data
+package ih.pam.pamobile_jelahjahmalang.network
 
+import ih.pam.pamobile_jelahjahmalang.model.Comment
+import ih.pam.pamobile_jelahjahmalang.model.PlaceModel
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-interface ApiService {
+interface ApiServicePricil {
 
     // Ambil semua place
     @GET("places.json")

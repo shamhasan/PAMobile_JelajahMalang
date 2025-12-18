@@ -1,4 +1,4 @@
-package pg.mobile.projectpampricil.data
+package ih.pam.pamobile_jelahjahmalang.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,7 +12,7 @@ object RetrofitInstance {
             .build()
     }
 
-    val apiService: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
+    val apiService: ApiServicePricil by lazy {
+        retrofit.create(ApiServicePricil::class.java)
     }
 }

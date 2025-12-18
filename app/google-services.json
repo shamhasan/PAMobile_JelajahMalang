@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "844379624128",
+    "project_id": "my-pam-test",
+    "storage_bucket": "my-pam-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844379624128:android:8c84798f66c6bd6e741325",
+        "android_client_info": {
+          "package_name": "ih.pam.pamobile_jelahjahmalang"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD56a7deDQoMc-t0NQ04qAOoKnJwXfhwoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844379624128:android:67dcb1457033717a741325",
+        "android_client_info": {
+          "package_name": "ih.pam.pamobile_jelajahmalang"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD56a7deDQoMc-t0NQ04qAOoKnJwXfhwoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

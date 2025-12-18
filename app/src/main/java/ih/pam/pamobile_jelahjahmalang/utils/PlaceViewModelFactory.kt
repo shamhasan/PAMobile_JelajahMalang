@@ -2,7 +2,8 @@ package pg.mobile.projectpampricil.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pg.mobile.projectpampricil.data.PlaceRepository
+import ih.pam.pamobile_jelahjahmalang.utils.PlaceRepository
+import ih.pam.pamobile_jelahjahmalang.viewmodel.PlaceViewModel
 
 class PlaceViewModelFactory(
     private val repository: PlaceRepository

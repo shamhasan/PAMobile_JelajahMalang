@@ -1,17 +1,17 @@
-package pg.mobile.projectpampricil.ui
+package ih.pam.pamobile_jelahjahmalang.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ih.pam.pamobile_jelahjahmalang.model.Comment
+import ih.pam.pamobile_jelahjahmalang.model.PlaceModel
+import ih.pam.pamobile_jelahjahmalang.utils.PlaceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import pg.mobile.projectpampricil.data.Comment
-import pg.mobile.projectpampricil.data.PlaceModel
-import pg.mobile.projectpampricil.data.PlaceRepository
-
 
 class PlaceViewModel(
-    private val repository: PlaceRepository) : ViewModel() {
+    private val repository: PlaceRepository
+) : ViewModel() {
 
     private val _places = MutableStateFlow<List<PlaceModel>>(emptyList())
     val places: StateFlow<List<PlaceModel>> = _places

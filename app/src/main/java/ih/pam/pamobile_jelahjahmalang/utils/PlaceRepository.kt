@@ -1,10 +1,13 @@
-package pg.mobile.projectpampricil.data
+package ih.pam.pamobile_jelahjahmalang.utils
 
 
+import ih.pam.pamobile_jelahjahmalang.model.Comment
+import ih.pam.pamobile_jelahjahmalang.model.PlaceModel
+import ih.pam.pamobile_jelahjahmalang.network.ApiServicePricil
 import java.util.UUID
 
 //
-class PlaceRepository(private val apiService: ApiService) {
+class PlaceRepository(private val apiService: ApiServicePricil) {
 
     // Ambil LIST JELAJAHMALANG!!!
     suspend fun fetchPlaces(): List<PlaceModel> {

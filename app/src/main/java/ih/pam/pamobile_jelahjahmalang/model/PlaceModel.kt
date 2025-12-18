@@ -1,4 +1,4 @@
-package pg.mobile.projectpampricil.data
+package ih.pam.pamobile_jelahjahmalang.model
 
 data class PlaceModel(
     val name: String = "",

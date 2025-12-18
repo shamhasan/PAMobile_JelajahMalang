@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Project PAM Pricil"
+rootProject.name = "PAMobile-JelahjahMalang"
 include(":app")
  

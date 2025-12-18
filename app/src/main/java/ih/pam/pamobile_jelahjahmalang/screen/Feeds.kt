@@ -1,5 +1,6 @@
-package pg.mobile.projectpampricil.ui
+package ih.pam.pamobile_jelahjahmalang.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,7 +18,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import pg.mobile.projectpampricil.data.PlaceModel
+import ih.pam.pamobile_jelahjahmalang.model.PlaceModel
+import ih.pam.pamobile_jelahjahmalang.viewmodel.PlaceViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,12 +87,17 @@ fun FeedScreen(
                     TopMenuCard(
                         title = "Mission",
                         emoji = "🔥",
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            navController.navigate("mission_list")
+                            Log.d("TopMenuCard", "Mission")
+                        }
                     )
                     TopMenuCard(
                         title = "Sekitar Anda",
                         emoji = "📍",
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        onClick = {}
                     )
                 }
                 Spacer(Modifier.height(16.dp))
@@ -240,11 +247,15 @@ fun FeedScreen(
 @Composable
 fun TopMenuCard(
     title: String,
+    onClick: () -> Unit ,
     emoji: String,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.clickable(onClick = {
+            onClick()
+        }
+        ),
         shape = RoundedCornerShape(18.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
