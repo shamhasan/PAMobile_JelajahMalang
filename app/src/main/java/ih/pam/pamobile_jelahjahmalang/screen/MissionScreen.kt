@@ -78,6 +78,11 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
     val completedMissionId =
         user?.fields?.completedMissions?.arrayValue?.values?.map { it.value } ?: emptyList()
 
+    val finishedCount = completedMissionId.size;
+
+    val activeCount = (missions.size - finishedCount).coerceAtLeast(0)
+
+
     LaunchedEffect(Unit) {
         viewmodelUser.fetchUser()
         viewmodelMission.fetchMissions()
@@ -155,7 +160,7 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
                                         modifier = modifier.requiredSize(25.dp)
                                     )
                                     Text(text = "Selesai")
-                                    Text(text = "0")
+                                    Text(text = finishedCount.toString())
                                 }
                                 VerticalDivider()
                                 Column(
@@ -189,7 +194,7 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
                                         tint = Color(0xff2B7FFF)
                                     )
                                     Text(text = "Aktif")
-                                    Text(text = "0")
+                                    Text(text = activeCount.toString())
                                 }
                             }
                         }
@@ -246,101 +251,54 @@ fun MissionScreen(modifier: Modifier = Modifier, navController: NavController) {
                 ) {
                     item {
                         Card(
-
                             colors = CardDefaults.cardColors(
-
                                 containerColor = Color.White
-
                             ), modifier = modifier
-
                                 .fillMaxWidth()
-
                                 .height(125.dp)
-
                                 .shadow(
-
                                     elevation = 4.dp,
-
                                     shape = RoundedCornerShape(12.dp),
-
                                     )
 
                         ) {
-
                             Row(
-
                                 modifier = modifier.padding(horizontal = 18.dp)
-
                             ) {
-
                                 Column(
-
                                     modifier = modifier
-
                                         .width(125.dp)
-
                                         .fillMaxSize(),
-
                                     horizontalAlignment = Alignment.CenterHorizontally,
-
                                     verticalArrangement = Arrangement.Center
-
                                 ) {
-
                                     Icon(
-
                                         tint = Color(0xffF0B100),
-
                                         painter = painterResource(id = R.drawable.oin),
-
                                         contentDescription = "Done icon",
-
                                         modifier = modifier.requiredSize(25.dp)
-
                                     )
-
                                     Text(text = "Total Poin")
-
                                     Text(text = "0")
-
                                 }
-
                                 VerticalDivider()
-
                                 Column(
-
                                     modifier = modifier
-
                                         .width(125.dp)
-
                                         .fillMaxSize(),
-
                                     horizontalAlignment = Alignment.CenterHorizontally,
-
                                     verticalArrangement = Arrangement.Center
-
                                 ) {
-
                                     Icon(
-
                                         painter = painterResource(id = R.drawable.done),
-
                                         contentDescription = "Done icon",
-
                                         modifier = modifier.requiredSize(25.dp),
-
                                         tint = Color(0xff00C950)
-
                                     )
-
                                     Text(text = "Total Poin")
-
                                     Text(text = "0")
-
                                 }
-
                                 VerticalDivider()
-
                                 Column(
 
                                     modifier = modifier
