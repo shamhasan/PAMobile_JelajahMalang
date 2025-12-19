@@ -17,7 +17,7 @@ class AuthInterceptor : Interceptor {
 
         val original = chain.request()
 
-        val newUrl = original.url().newBuilder()
+        val newUrl = original.url.newBuilder()
             .addQueryParameter("auth", token)
             .build()
 

@@ -69,7 +69,7 @@ fun FeedScreen(
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )
-                        Spacer(Modifier.height( 8.dp))
+                        Spacer(Modifier.height(8.dp))
                         Text(
                             "Mulai dari tempat nongkrong tersembunyi sampai spot foto estetik — semua ada di sini!",
                             color = Color.White.copy(alpha = 0.9f),
@@ -80,7 +80,7 @@ fun FeedScreen(
                 Spacer(Modifier.height(16.dp))
             }
 
-            // ===== 2 KARTU ATAS: MISSION & SEKITAR ANDA =====
+            // ===== 2 KARTU ATAS: MISSION & CHATBOT =====
             item {
                 Row(
                     modifier = Modifier
@@ -99,15 +99,18 @@ fun FeedScreen(
                     )
                     TopMenuCard(
                         title = "Chatbot",
-                        emoji = "📍",
+                        emoji = "💬",
                         modifier = Modifier.weight(1f),
-                        onClick = {}
+                        onClick = {
+                            navController.navigate("chat_list")
+                            Log.d("TopMenuCard", "Chatbot")
+                        }
                     )
                 }
                 Spacer(Modifier.height(16.dp))
             }
 
-//             ===== SECTION FAVORIT =====
+            // ===== SECTION FAVORIT =====
             item {
                 Text(
                     text = "Favorit",
@@ -139,13 +142,14 @@ fun FeedScreen(
                             ) {
                                 navController.navigate("detail/${place.name}")
                             }
-
                         }
                     }
                 }
 
                 Spacer(Modifier.height(12.dp))
             }
+
+            // ===== SECTION REKOMENDASI =====
             if (recommended.isNotEmpty()) {
                 item {
                     Spacer(Modifier.height(16.dp))
@@ -177,8 +181,7 @@ fun FeedScreen(
                 }
             }
 
-
-//            ===== LOADING / ERROR =====
+            // ===== LOADING / ERROR =====
             if (loading) {
                 item {
                     Box(
@@ -204,9 +207,7 @@ fun FeedScreen(
                 }
             }
 
-
-// FEEDS!!!!!!!!!!!
-            // Grid 2 kolom, scroll ke bawah
+            // ===== LIST TEMPAT (GRID 2 KOLOM) =====
             item {
                 Text(
                     "List Tempat",
@@ -252,15 +253,12 @@ fun FeedScreen(
 @Composable
 fun TopMenuCard(
     title: String,
-    onClick: () -> Unit ,
+    onClick: () -> Unit,
     emoji: String,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.clickable(onClick = {
-            onClick()
-        }
-        ),
+        modifier = modifier.clickable(onClick = onClick),
         shape = RoundedCornerShape(18.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)

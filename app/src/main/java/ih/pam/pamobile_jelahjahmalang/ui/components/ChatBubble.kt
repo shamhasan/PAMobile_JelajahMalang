@@ -27,9 +27,6 @@ fun ChatBubble(
             shape = RoundedCornerShape(16.dp),
             tonalElevation = 2.dp,
             modifier = Modifier
-                // FIX: Mengganti widthIn(max = 280.dp) dengan fillMaxWidth(0.8f).
-                // Ini memungkinkan bubble melebar hingga 80% dari layar,
-                // sehingga teks panjang tidak terpotong atau terlalu cepat pindah baris.
                 .fillMaxWidth(0.8f)
                 .padding(8.dp)
         ) {
