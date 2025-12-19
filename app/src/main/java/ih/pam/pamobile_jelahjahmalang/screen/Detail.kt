@@ -86,7 +86,9 @@ fun DetailScreen(placeId: String, navController: NavController, vm: PlaceViewMod
                 Text("Belum ada komentar", color = Color.Gray)
             } else {
                 comments.forEach {
-                    CommentCard("User", it.text, it.rating)
+//                    CommentCard("User", it.text, it.rating)
+                    CommentCard(it.userName, it.text, it.rating)
+
                 }
             }
 
@@ -165,7 +167,7 @@ fun CommentDialog(
         },
         confirmButton = {
             TextButton(onClick = {
-               onSubmit(text, rating)
+                onSubmit(text, rating)
             }) {
                 Text("Kirim")
             }

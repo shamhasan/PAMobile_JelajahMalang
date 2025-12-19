@@ -10,6 +10,9 @@ data class PlaceModel(
 
 
 data class Comment(
+    val userId: String = "",
+    val userName: String = "",
     val text: String = "",
-    val rating: Int = 0
+    val rating: Int = 0,
+    val timestamp: Long = 0
 )
