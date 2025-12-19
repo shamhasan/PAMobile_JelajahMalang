@@ -40,7 +40,7 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController, vie
     LaunchedEffect(authStatus) {
         if (authStatus == "success") {
             // Jika status berubah jadi sukses -> Pindah halaman
-            navController.navigate("mission_list") {
+            navController.navigate("feed") {
                 // (Opsional) Hapus halaman register/login dari backstack agar tidak bisa back
                 popUpTo("login") { inclusive = true }
             }
