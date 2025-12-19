@@ -94,7 +94,7 @@ fun FeedScreen(
                         }
                     )
                     TopMenuCard(
-                        title = "Sekitar Anda",
+                        title = "Chatbot",
                         emoji = "📍",
                         modifier = Modifier.weight(1f),
                         onClick = {}
