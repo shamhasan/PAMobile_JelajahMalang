@@ -1,6 +1,7 @@
 package ih.pam.pamobile_jelahjahmalang.screen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -27,6 +29,8 @@ fun FeedScreen(
     navController: NavController,
     vm: PlaceViewModel
 ) {
+    val context = LocalContext.current
+
     val places by vm.places.collectAsState()
     val favorites by vm.favorites.collectAsState()
     val loading by vm.loading.collectAsState()
@@ -164,6 +168,7 @@ fun FeedScreen(
                                 place = place,
                                 modifier = Modifier.width(180.dp)
                             ) {
+                                Toast.makeText(context, "Kamu memilih: ${place.name}", Toast.LENGTH_SHORT).show()
                                 navController.navigate("detail/${place.name}")
                             }
                         }

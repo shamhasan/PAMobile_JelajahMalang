@@ -5,6 +5,7 @@ import ih.pam.pamobile_jelahjahmalang.model.Comment
 import ih.pam.pamobile_jelahjahmalang.model.PlaceModel
 import ih.pam.pamobile_jelahjahmalang.network.ApiServicePricil
 import java.util.UUID
+import com.google.firebase.auth.FirebaseAuth
 
 //
 class PlaceRepository(private val apiService: ApiServicePricil) {
@@ -21,9 +22,20 @@ class PlaceRepository(private val apiService: ApiServicePricil) {
     }
 
     // Tambah komentar
+
     suspend fun addComment(placeName: String, text: String, rating: Int) {
-        val id = UUID.randomUUID().toString()   // ID unik buat path {id}.json
-        val comment = Comment(text = text, rating = rating)
+        val id = UUID.randomUUID().toString()
+
+        val user = FirebaseAuth.getInstance().currentUser
+        val userName = user?.email ?: "Anonymous"
+        val uid = user?.uid ?: ""
+
+        val comment = Comment(
+            userId = uid,
+            userName = userName,
+            text = text,
+            rating = rating
+        )
 
         apiService.addComment(
             placeName = placeName,
@@ -31,6 +43,19 @@ class PlaceRepository(private val apiService: ApiServicePricil) {
             comment = comment
         )
     }
+
+
+
+//    suspend fun addComment(placeName: String, text: String, rating: Int) {
+//        val id = UUID.randomUUID().toString()   // ID unik buat path {id}.json
+//        val comment = Comment(text = text, rating = rating)
+//
+//        apiService.addComment(
+//            placeName = placeName,
+//            id = id,
+//            comment = comment
+//        )
+//    }
 
     // Update rating
     suspend fun updateRating(placeName: String, rating: Double) {
