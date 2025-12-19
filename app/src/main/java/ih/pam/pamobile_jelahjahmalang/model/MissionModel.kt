@@ -55,7 +55,7 @@ data class StringValue(
     @SerializedName("stringValue")
     val value: String = ""
 )
-
+    
 data class IntegerValue(
     @SerializedName("integerValue")
     val value: String = "0"
