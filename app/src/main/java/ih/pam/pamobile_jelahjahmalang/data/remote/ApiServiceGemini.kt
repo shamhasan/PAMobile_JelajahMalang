@@ -20,13 +20,11 @@ object ApiServiceGemini {
 
     suspend fun generateReply(prompt: String): String = withContext(Dispatchers.IO) {
 
-        // FIX ECHOING RESPONSE:
-        // Instruksi dibuat sangat singkat dan diletakkan di awal,
-        // mengurangi kemungkinan model mengkonfirmasi instruksi.
+
         val instruction = "Jawab langsung. Format keluaran wajib teks biasa, tanpa markdown (** atau #)."
         val modifiedPrompt = "$instruction $prompt" // Gabungkan instruksi dengan prompt user
 
-        // URL menggunakan MODEL_NAME yang benar
+
         val url =
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyCHHlBv64ChPZYHaPC9wbS7xVY-_YwojRg"
 

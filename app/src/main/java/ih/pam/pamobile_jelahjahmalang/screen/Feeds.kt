@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import ih.pam.pamobile_jelahjahmalang.model.PlaceModel
 import ih.pam.pamobile_jelahjahmalang.viewmodel.PlaceViewModel
 
@@ -291,11 +292,12 @@ fun PlaceCardItem(
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column {
-            Box(
+            AsyncImage(
+                model = place.image,
+                contentDescription = place.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(imageHeight)
-                    .background(Color.LightGray)
+                    .height(180.dp)
             )
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(place.name, fontWeight = FontWeight.Bold, fontSize = 14.sp)

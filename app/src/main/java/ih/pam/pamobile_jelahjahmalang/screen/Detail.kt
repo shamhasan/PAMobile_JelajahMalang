@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import ih.pam.pamobile_jelahjahmalang.viewmodel.PlaceViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,11 +58,12 @@ fun DetailScreen(placeId: String, navController: NavController, vm: PlaceViewMod
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
-            Box(
+            AsyncImage(
+                model = place.image,
+                contentDescription = place.name,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
-                    .background(Color.LightGray, RoundedCornerShape(16.dp))
             )
             Spacer(modifier = Modifier.height(12.dp))
 

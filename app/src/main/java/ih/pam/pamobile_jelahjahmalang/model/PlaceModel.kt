@@ -4,7 +4,8 @@ data class PlaceModel(
     val name: String = "",
     val description: String = "",
     val rating: Double = 0.0,
-    val theme: String = ""
+    val theme: String = "",
+    val image: String = ""
 )
 
 
