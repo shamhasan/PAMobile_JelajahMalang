@@ -42,6 +42,9 @@ fun MissionScreen(
     val completedMissionId =
         user?.fields?.completedMissions?.arrayValue?.values?.map { it.value } ?: emptyList()
 
+    val activeMission = missions.size - completedMissionId.size
+
+
     val listState = rememberLazyListState()
 
     LaunchedEffect(Unit) {
@@ -88,7 +91,7 @@ fun MissionScreen(
                 ) {
 
                     item {
-                        StatusCard(user?.fields?.totalPoints?.value ?: "0")
+                        StatusCard(user?.fields?.totalPoints?.value ?: "0", doneMission = completedMissionId.size.toString(), activeMission = activeMission.toString() )
                         Spacer(Modifier.height(32.dp))
                         Text("Daftar Misi", fontWeight = FontWeight.Medium)
                         Spacer(Modifier.height(16.dp))
@@ -153,7 +156,7 @@ fun MissionScreen(
 }
 
 @Composable
-private fun StatusCard(totalPoin: String) {
+private fun StatusCard(totalPoin: String, activeMission: String, doneMission: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -168,9 +171,9 @@ private fun StatusCard(totalPoin: String) {
         ) {
             StatusItem("Poin", totalPoin, R.drawable.oin, Color(0xffF0B100))
             VerticalDivider()
-            StatusItem("Aktif", "-", R.drawable.available, Color(0xff2B7FFF))
+            StatusItem("Aktif", activeMission, R.drawable.available, Color(0xff2B7FFF))
             VerticalDivider()
-            StatusItem("Selesai", "-", R.drawable.done, Color(0xff00C950))
+            StatusItem("Selesai", doneMission, R.drawable.done, Color(0xff00C950))
         }
     }
 }

@@ -1,4 +1,4 @@
-package ih.pam.pamobile_jelahjahmalang.models
+package ih.pam.pamobile_jelahjahmalang.model
 
 data class ChatMessage(
     val id: String = "",

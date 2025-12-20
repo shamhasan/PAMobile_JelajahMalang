@@ -2,8 +2,8 @@ package ih.pam.pamobile_jelahjahmalang.data.repository
 
 
 import ih.pam.pamobile_jelahjahmalang.data.remote.ApiServiceGemini
-import ih.pam.pamobile_jelahjahmalang.models.ChatMessage
-import ih.pam.pamobile_jelahjahmalang.models.ChatSession
+import ih.pam.pamobile_jelahjahmalang.model.ChatMessage
+import ih.pam.pamobile_jelahjahmalang.model.ChatSession
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
